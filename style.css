@@ -1,0 +1,145 @@
+/* Timeline wrapper */
+.timeline-wrapper {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 2rem 0;
+  position: relative;
+  margin-top: 2rem;
+  scroll-behavior: smooth;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 3rem;
+}
+
+/* Individual timeline card */
+.timeline-card {
+  display: inline-block;
+  width: 300px;
+  text-align: center;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 1;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Hover effect */
+.timeline-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  background-color: #f0f0f0;
+}
+
+.timeline-card img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.timeline-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Alternate card positions */
+.timeline-card:nth-child(odd) {
+  transform: translateY(-40px);
+}
+
+.timeline-card:nth-child(even) {
+  transform: translateY(40px);
+}
+
+/* Arrows between cards */
+.timeline-card::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 1;
+}
+
+/* Down arrow (even cards) */
+.timeline-card:nth-child(even)::after {
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 15px solid #000;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounceDown 1.2s infinite ease-in-out;
+}
+
+/* Up arrow (odd cards) */
+.timeline-card:nth-child(odd)::after {
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-bottom: 15px solid #000;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounceUp 1.2s infinite ease-in-out;
+}
+
+/* Remove arrow for last card */
+.timeline-card:last-child::after {
+  display: none;
+}
+
+/* Scroll Indicator */
+#scroll-indicator-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background-color: transparent;
+  z-index: 999;
+}
+
+#scroll-indicator-bar {
+  height: 100%;
+  width: 0%;
+  background-color: #000;
+  transition: width 0.25s ease-out;
+}
+
+/* Keyframes for arrow animations */
+@keyframes bounceDown {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(5px); }
+}
+
+@keyframes bounceUp {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* Mobile responsive adjustments */
+@media screen and (max-width: 768px) {
+  .timeline-wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .timeline-card {
+    width: 90%;
+    transform: none !important;
+  }
+
+  .timeline-card::after {
+    display: none;
+  }
+
+  #scroll-indicator-container {
+    display: none;
+  }
+}
