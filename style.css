@@ -1,36 +1,57 @@
+
 /* Timeline wrapper */
 .timeline-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 4rem;
+  padding: 6rem 2rem;
   overflow-x: auto;
   white-space: nowrap;
-  padding: 2rem 0;
-  position: relative;
-  margin-top: 2rem;
-  scroll-behavior: smooth;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 3rem;
+  width: 100%;
 }
 
-/* Individual timeline card */
+/* Horizontal timeline line */
+.timeline-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: #ffffff;
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+/* Timeline card */
 .timeline-card {
-  display: inline-block;
-  width: 300px;
-  text-align: center;
   position: relative;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  z-index: 1;
-  white-space: normal;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  box-sizing: border-box;
+  width: 300px;
   background: white;
-  padding: 1rem;
+  padding: 1.5rem;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  white-space: normal;
 }
 
-/* Hover effect */
+.timeline-card:nth-child(odd) {
+  margin-bottom: 60px;
+  margin-top: 0;
+}
+
+.timeline-card:nth-child(even) {
+  margin-top: 60px;
+  margin-bottom: 0;
+}
+
 .timeline-card:hover {
   transform: scale(1.03);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
@@ -42,55 +63,44 @@
   height: auto;
   border-radius: 8px;
   transition: transform 0.3s ease;
+  margin-bottom: 1rem;
 }
 
 .timeline-card:hover img {
   transform: scale(1.05);
 }
 
-/* Alternate card positions */
-.timeline-card:nth-child(odd) {
-  transform: translateY(-40px);
-}
-
-.timeline-card:nth-child(even) {
-  transform: translateY(40px);
-}
-
-/* Arrows between cards */
+/* Arrows above and below cards */
 .timeline-card::after {
   content: '';
   position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   width: 0;
   height: 0;
-  z-index: 1;
+  z-index: 2;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  animation: bounceArrow 1.2s infinite ease-in-out;
 }
 
-/* Down arrow (even cards) */
-.timeline-card:nth-child(even)::after {
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-top: 15px solid #000;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: bounceDown 1.2s infinite ease-in-out;
-}
-
-/* Up arrow (odd cards) */
 .timeline-card:nth-child(odd)::after {
-  border-left: 15px solid transparent;
-  border-right: 15px solid transparent;
-  border-bottom: 15px solid #000;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  animation: bounceUp 1.2s infinite ease-in-out;
+  border-top: 15px solid #ffffff;
+  top: 100%;
 }
 
-/* Remove arrow for last card */
+.timeline-card:nth-child(even)::after {
+  border-bottom: 15px solid #ffffff;
+  bottom: 100%;
+}
+
 .timeline-card:last-child::after {
   display: none;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%      { transform: translateX(-50%) translateY(5px); }
 }
 
 /* Scroll Indicator */
@@ -111,28 +121,18 @@
   transition: width 0.25s ease-out;
 }
 
-/* Keyframes for arrow animations */
-@keyframes bounceDown {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(5px); }
-}
-
-@keyframes bounceUp {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50%      { transform: translateX(-50%) translateY(-5px); }
-}
-
 /* Mobile responsive adjustments */
 @media screen and (max-width: 768px) {
   .timeline-wrapper {
     flex-direction: column;
     align-items: center;
     gap: 2rem;
+    overflow-x: hidden;
   }
 
   .timeline-card {
     width: 90%;
-    transform: none !important;
+    margin: 0 auto;
   }
 
   .timeline-card::after {
@@ -143,3 +143,21 @@
     display: none;
   }
 }
+
+body {
+  background: radial-gradient(circle at center, #ffe5e5, gray 50%, #ffffff);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+@font-face {
+  font-family: 'MomsTypewriter';
+  src: url('./fonts/MomsTypewriter.ttf') format('truetype');
+}  
+
+
+
